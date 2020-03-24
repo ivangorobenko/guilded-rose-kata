@@ -23,7 +23,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("+5 Dexterity Vest", 10, 20)};
         GildedRose app = new GildedRose(items);
         int days = 12;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals("+5 Dexterity Vest", app.items[0].name);
@@ -32,12 +32,24 @@ class GildedRoseTest {
     }
 
     @Test
+    void shouldLowerQualityTwiceAsFastOnceTheSellDatePassedForConjuredCase() {
+
+        Item[] items = new Item[]{new Item("Conjured", 2, 20)};
+        GildedRose app = new GildedRose(items);
+        int days = 3;
+        for (int i = 1; i <= days; i++) {
+            app.updateQuality();
+        }
+        assertEquals(12, app.items[0].quality);
+    }
+
+    @Test
     void qualityOfAnItemShouldNeverBeNegatif() {
 
         Item[] items = new Item[]{new Item("+5 Dexterity Vest", 10, 20)};
         GildedRose app = new GildedRose(items);
         int days = 22;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(0, app.items[0].quality);
@@ -49,7 +61,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Aged Brie", 10, 10)};
         GildedRose app = new GildedRose(items);
         int days = 2;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(8, app.items[0].sellIn);
@@ -57,12 +69,24 @@ class GildedRoseTest {
     }
 
     @Test
-    void qualityOfAnItemShouldNeverBeMoreThan50() {
+    void qualityOfAnItemShouldNeverBeMoreThan50AgedBrieCase() {
 
         Item[] items = new Item[]{new Item("Aged Brie", 10, 40)};
         GildedRose app = new GildedRose(items);
         int days = 30;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
+            app.updateQuality();
+        }
+        assertEquals(50, app.items[0].quality);
+    }
+
+    @Test
+    void qualityOfAnItemShouldNeverBeMoreThan50Case2() {
+
+        Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 50, 40)};
+        GildedRose app = new GildedRose(items);
+        int days = 30;
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(50, app.items[0].quality);
@@ -74,7 +98,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Sulfuras, Hand of Ragnaros", 10, 40)};
         GildedRose app = new GildedRose(items);
         int days = 20;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(10, app.items[0].sellIn);
@@ -87,7 +111,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Sulfuras, Hand of Ragnaros", -1, 40)};
         GildedRose app = new GildedRose(items);
         int days = 20;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(-1, app.items[0].sellIn);
@@ -99,7 +123,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 20, 20)};
         GildedRose app = new GildedRose(items);
         int days = 4;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(24, app.items[0].quality);
@@ -111,7 +135,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 20, 20)};
         GildedRose app = new GildedRose(items);
         int days = 12;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(34, app.items[0].quality);
@@ -124,7 +148,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 20, 20)};
         GildedRose app = new GildedRose(items);
         int days = 17;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(46, app.items[0].quality);
@@ -136,7 +160,7 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20)};
         GildedRose app = new GildedRose(items);
         int days = 5;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(35, app.items[0].quality);
@@ -148,11 +172,20 @@ class GildedRoseTest {
         Item[] items = new Item[]{new Item("Backstage passes to a TAFKAL80ETC concert", 5, 20)};
         GildedRose app = new GildedRose(items);
         int days = 6;
-        for (int i = 1; i<=days; i++){
+        for (int i = 1; i <= days; i++) {
             app.updateQuality();
         }
         assertEquals(0, app.items[0].quality);
     }
 
-
+    @Test
+    void qualityShouldDecreaseTwiceAsFastAsNormalItemsForConjuredItem() {
+        Item[] items = new Item[]{new Item("Conjured", 5, 20)};
+        GildedRose app = new GildedRose(items);
+        int days = 2;
+        for (int i = 1; i <= days; i++) {
+            app.updateQuality();
+        }
+        assertEquals(16, app.items[0].quality);
+    }
 }
